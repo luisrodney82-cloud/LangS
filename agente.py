@@ -9,7 +9,6 @@ from langchain_core.globals import set_debug
  
 set_debug(False)
  
- 
 from dotenv import load_dotenv
 from openai import OpenAI
  
@@ -63,10 +62,9 @@ prompt_produtoUpSell = PromptTemplate(
     input_variables=["modelo_indicado", "Produtos_CrossIndicados"],
 )
  
- 
- 
+  
 modelo = ChatOpenAI(
-    model_name="gpt-4o-mini",
+    model_name="gpt-5-nano",
     api_key=api_key_minha,
     temperature=0.5
 )
@@ -77,6 +75,7 @@ cadeia_2 = prompt_produtoCross | modelo | parseador_cross
 cadeia_3 = prompt_produtoUpSell | modelo | StrOutputParser()
  
 indicacao_produto = cadeia_1.invoke({"produto": "TV 55 polegadas", "ambiente": "sala de estar"})
+
 cross_sell = cadeia_2.invoke({
     "modelo_indicado": indicacao_produto["modelo_indicado"],
     "para_o_ambiente": "sala de estar",
